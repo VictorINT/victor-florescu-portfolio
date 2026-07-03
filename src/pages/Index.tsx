@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowRight, PenLine } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -52,7 +53,19 @@ const BlogCTA = () => {
   );
 };
 
-const Index = () => (
+const Index = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    if (hash) {
+      requestAnimationFrame(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  }, [location]);
+
+  return (
   <>
     <Navbar />
     <main>
@@ -70,6 +83,7 @@ const Index = () => (
     </main>
     <FooterSection />
   </>
-);
+  );
+};
 
 export default Index;
