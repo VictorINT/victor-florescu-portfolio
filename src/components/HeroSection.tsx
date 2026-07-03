@@ -47,7 +47,7 @@ const HeroSection = () => (
               className="flex flex-wrap items-center gap-3 mb-8"
             >
               <a
-                href={`${import.meta.env.BASE_URL}cv_victor_florescu.pdf`}
+                href={`${import.meta.env.BASE_URL}Victor_Florescu_CV.pdf`}
                 download
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all duration-200 shadow-lg shadow-primary/20"
               >
