@@ -1,8 +1,11 @@
+import automaticaCover from "@/assets/blog/automatica-si-calculatoare.jpg";
+
 export type BlogCategory = "projects" | "lifestyle" | "sports" | "tech" | "travel";
 
 export interface BlogPost {
   id: string;
   title: string;
+  pinned?: boolean;
   description: string;
   /** Optional real image. If missing, a typographic cover is rendered. */
   thumbnail?: string;
@@ -24,6 +27,18 @@ export const categories: { value: BlogCategory | "all"; label: string }[] = [
 ];
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: "what-is-automatica-si-calculatoare",
+    title: 'But What’s "Automatica si Calculatoare" Really About?',
+    pinned: true,
+    thumbnail: automaticaCover,
+    description: 'A closer look at Automatica si Calculatoare. Full article coming soon.',
+    cover: { label: "ACS / beyond the name", accent: "amber" },
+    category: "tech",
+    date: "2026-11-17",
+    readTime: "Coming soon",
+    content: `<p>The full article is coming soon. Check back for a closer look at what “Automatica si Calculatoare” is really about.</p>`,
+  },
   {
     id: "imc-prosperity-4",
     title: "IMC Prosperity 4: #2 in Romania",

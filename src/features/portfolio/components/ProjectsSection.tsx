@@ -1,4 +1,4 @@
-import AnimatedSection from "./AnimatedSection";
+import AnimatedSection from "@/components/AnimatedSection";
 import { FolderGit2 } from "lucide-react";
 
 const projects = [

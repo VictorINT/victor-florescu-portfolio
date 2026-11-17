@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const sectionLinks = [
   { label: "Home", hash: "home" },
+  { label: "Blog", hash: "blog" },
   { label: "Education", hash: "education" },
   { label: "Experience", hash: "experience" },
   { label: "Projects", hash: "projects" },
@@ -18,14 +19,29 @@ const scrollToSection = (hash: string) => {
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const location = useLocation();
   const onHomePage = location.pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      if (!onHomePage) return;
+      const currentSection = [...sectionLinks].reverse().find(({ hash }) => {
+        const section = document.getElementById(hash);
+        return section && section.getBoundingClientRect().top <= 120;
+      });
+      setActiveSection(currentSection?.hash ?? "home");
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [onHomePage]);
+
+  const isActive = (hash: string) => hash === "blog"
+    ? location.pathname === "/blog" || (onHomePage && activeSection === "blog")
+    : onHomePage && activeSection === hash;
+
 
   const handleSectionClick = (e: React.MouseEvent, hash: string) => {
     if (onHomePage) {
@@ -36,13 +52,17 @@ const Navbar = () => {
     setOpen(false);
   };
 
-  const linkClass =
-    "text-sm text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md hover:bg-secondary/50 transition-all duration-200";
+  const linkClass = (hash: string) =>
+    `text-sm min-h-10 inline-flex items-center px-3 py-2 rounded-md border-b-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${
+      isActive(hash)
+        ? "text-foreground font-medium border-primary bg-secondary/60"
+        : "text-muted-foreground border-transparent hover:text-foreground hover:bg-secondary/50"
+    }`;
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+        scrolled || !onHomePage
           ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-lg shadow-background/50"
           : "bg-transparent border-b border-transparent"
       }`}
@@ -61,22 +81,23 @@ const Navbar = () => {
           {sectionLinks.map((l) => (
             <Link
               key={l.hash}
-              to={{ pathname: "/", hash: l.hash }}
-              onClick={(e) => handleSectionClick(e, l.hash)}
-              className={linkClass}
+              to={l.hash === "blog" ? "/blog" : { pathname: "/", hash: l.hash }}
+              onClick={(e) => l.hash === "blog" ? setOpen(false) : handleSectionClick(e, l.hash)}
+              className={linkClass(l.hash)}
+              aria-current={isActive(l.hash) ? (l.hash === "blog" ? "page" : "location") : undefined}
             >
               {l.label}
             </Link>
           ))}
-          <Link to="/blog" className={linkClass}>
-            Blog
-          </Link>
         </div>
 
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-muted-foreground hover:text-foreground transition-colors"
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
+          className="md:hidden min-h-11 min-w-11 inline-flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -92,24 +113,18 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-border"
           >
-            <div className="px-6 py-4 flex flex-col gap-1">
+            <div id="mobile-navigation" className="px-6 py-4 flex flex-col gap-1">
               {sectionLinks.map((l) => (
                 <Link
                   key={l.hash}
-                  to={{ pathname: "/", hash: l.hash }}
-                  onClick={(e) => handleSectionClick(e, l.hash)}
-                  className="text-sm text-muted-foreground hover:text-foreground py-2 px-3 rounded-md hover:bg-secondary/50 transition-all"
+                  to={l.hash === "blog" ? "/blog" : { pathname: "/", hash: l.hash }}
+                  onClick={(e) => l.hash === "blog" ? setOpen(false) : handleSectionClick(e, l.hash)}
+                  className={linkClass(l.hash)}
+                  aria-current={isActive(l.hash) ? (l.hash === "blog" ? "page" : "location") : undefined}
                 >
                   {l.label}
                 </Link>
               ))}
-              <Link
-                to="/blog"
-                onClick={() => setOpen(false)}
-                className="text-sm text-muted-foreground hover:text-foreground py-2 px-3 rounded-md hover:bg-secondary/50 transition-all"
-              >
-                Blog
-              </Link>
             </div>
           </motion.div>
         )}

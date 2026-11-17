@@ -1,4 +1,4 @@
-import { BlogPost } from "@/data/blogPosts";
+import { BlogPost } from "@/features/blog/data/posts";
 
 const accentMap: Record<string, string> = {
   amber: "from-amber-500/20 via-amber-500/5 to-transparent text-amber-300/90",

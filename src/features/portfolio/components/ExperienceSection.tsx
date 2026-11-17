@@ -1,4 +1,4 @@
-import AnimatedSection from "./AnimatedSection";
+import AnimatedSection from "@/components/AnimatedSection";
 import { Briefcase } from "lucide-react";
 
 const experiences = [

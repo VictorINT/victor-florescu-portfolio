@@ -1,4 +1,4 @@
-import AnimatedSection from "./AnimatedSection";
+import AnimatedSection from "@/components/AnimatedSection";
 import { Cpu, Brain, Wrench, Globe, Award } from "lucide-react";
 
 const categories = [

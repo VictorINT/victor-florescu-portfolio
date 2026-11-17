@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Download, Mail, ChevronDown } from "lucide-react";
-import victorImg from "@/assets/victor.jpg";
+import victorImg from "@/assets/profile/victor.jpg";
 
 const HeroSection = () => (
-  <section id="home" className="min-h-screen flex flex-col pt-14 relative">
+  <section id="home" className="min-h-[100svh] flex flex-col pt-14 relative">
     <div className="flex-1 flex items-center">
-      <div className="max-w-5xl mx-auto px-6 w-full py-16 sm:py-20">
-        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-20">
+      <div className="max-w-6xl mx-auto px-6 w-full pt-10 pb-24 sm:pt-16 sm:pb-28">
+        <div className="grid grid-cols-1 md:grid-cols-[1.05fr_1fr] items-center gap-10 md:gap-10 lg:gap-16">
           {/* Text */}
-          <div className="flex-1 order-2 md:order-1">
+          <div className="min-w-0 order-2 md:order-1 text-center md:text-left">
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -31,7 +31,7 @@ const HeroSection = () => (
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.35 }}
-              className="text-base sm:text-lg text-muted-foreground mb-8 max-w-lg leading-relaxed"
+              className="text-base sm:text-lg text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed"
             >
               CS & Engineering @ UPB Bucharest.
               <span className="hidden sm:inline"> </span>
@@ -44,7 +44,7 @@ const HeroSection = () => (
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-wrap items-center gap-3 mb-8"
+              className="flex flex-wrap justify-center md:justify-start items-center gap-3 mb-8"
             >
               <a
                 href={`${import.meta.env.BASE_URL}Victor_Florescu_CV.pdf`}
@@ -68,7 +68,7 @@ const HeroSection = () => (
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex items-center gap-5"
+              className="flex justify-center md:justify-start items-center gap-5"
             >
               <a
                 href="https://github.com/VictorINT"
@@ -77,7 +77,7 @@ const HeroSection = () => (
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <Github size={17} />
-                <span className="hidden sm:inline">GitHub</span>
+                <span className="inline">GitHub</span>
               </a>
               <span className="w-px h-4 bg-border" />
               <a
@@ -87,7 +87,7 @@ const HeroSection = () => (
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <Linkedin size={17} />
-                <span className="hidden sm:inline">LinkedIn</span>
+                <span className="inline">LinkedIn</span>
               </a>
             </motion.div>
           </div>
@@ -97,16 +97,18 @@ const HeroSection = () => (
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="order-1 md:order-2 flex-shrink-0"
+            className="order-1 md:order-2 w-full max-w-[300px] sm:max-w-[350px] lg:max-w-[420px] mx-auto"
           >
             <div className="relative">
-              {/* Glow behind photo */}
-              <div className="absolute -inset-4 rounded-3xl bg-primary/8 blur-2xl" />
-              <div className="relative w-44 h-44 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-2xl overflow-hidden border border-border shadow-2xl shadow-primary/10">
+              <div aria-hidden="true" className="absolute -inset-3 rounded-[2rem] border border-primary/20 rotate-3" />
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-border shadow-2xl shadow-black/30 bg-card">
                 <img
                   src={victorImg}
-                  alt="Victor-Stefan Florescu"
-                  className="w-full h-full object-cover"
+                  alt="Victor-Stefan Florescu in his electronics workshop"
+                  fetchPriority="high"
+                  width={1280}
+                  height={960}
+                  className="w-full h-full object-cover object-[65%_center]"
                 />
               </div>
             </div>
